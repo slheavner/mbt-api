@@ -9,28 +9,32 @@
 The project requires a number of configuration strings to be set.
 
 ###### /conf/application.conf
-All of these settings will be overridden by an environment variable if it is present. 
-Windows: 
+Simply rename **'example.private.conf'** to **'private.conf'**, and set the values. Your values will be used, and private.conf is in the .gitignore  
+[MongoDB installation guide](https://docs.mongodb.org/v3.0/installation/#installation-guides)  
 ```
-play.crypto.secret="changeme" #application secret, doesn't need to be set unless in production
-play.crypto.secret=${?APPLICATION_SECRET}
-
-google.maps.key="webapikey" #Google Maps Browser key
-google.maps.key=${?GOOGLEMAPS_KEY}
-
-email.username="username@gmail.com"  #Gmail account for mailer
-email.username=${?EMAIL_USERNAME}
-
-email.password="password"  #Password for gmail account
-email.password=${?EMAIL_PASSWORD}
+mongo.url="mongodb://localhost/dev"
+google.maps.key="browserkey" #not very important
+play.crypto.secret="supersecret123"
+email {
+  username = "youremail@gmail.com"
+  password = "yourpassword"
+}
 ```
-
-If you would like to contribute before I get the new api project on github, message me and I will give you a url to use for the api. 
+###### /twitter4j.properties
+Simply rename **example.twitter4j.properties** to **twitter4j.properties** and add your Twitter application keys.  
+[Manage Twitter apps here](https://apps.twitter.com/)
+```
+debug=true
+oauth.consumerKey=key123
+oauth.consumerSecret=key123
+oauth.accessToken=key123
+oauth.accessTokenSecret=key123
+```
 
 -----
 ##### About
 
-This project is the Android app for the Morgantown Bus & PRT Tracker project. It was made out of a need to track the buses around Morgantown, WV, as a West Virginia University student. It was also made because *programming is fun*.
+This project is the Web API for the Morgantown Bus & PRT Tracker project. It was made out of a need to track the buses around Morgantown, WV, as a West Virginia University student. It was also made because *programming is fun*.
 
 -----
 ##### License
