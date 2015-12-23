@@ -6,7 +6,24 @@
 ### mbt-api
 
 ##### Setup
+
+To start the webserver, simply do:
+###### Not Windows
+```Shell
+cd /path/to/mbt-api
+./activator run
+```
+###### Windows
+```Shell
+cd C:\path\to\mbt-api
+activator.bat run
+```
+
 The project requires a number of configuration strings to be set.
+
+* MongoDB access
+* Java 8
+* Twitter App Credentials (mostly required)
 
 ###### /conf/application.conf
 Simply rename **'example.private.conf'** to **'private.conf'**, and set the values. Your values will be used, and private.conf is in the .gitignore  
@@ -30,6 +47,8 @@ oauth.consumerSecret=key123
 oauth.accessToken=key123
 oauth.accessTokenSecret=key123
 ```
+
+I suggest you use IntelliJ IDE, but it isn't necessary.
 
 -----
 ##### About
