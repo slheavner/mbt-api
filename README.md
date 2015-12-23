@@ -9,6 +9,7 @@
 ### mbt-api
 Other compoenents
 * [mbt-android](https://github.com/slheavner/mbt-android)
+* [mbt-ios](https://github.com/slheavner/mbt-ios)
 
 ##### Setup
 
