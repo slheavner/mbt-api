@@ -11,7 +11,7 @@ The project requires a number of configuration strings to be set.
 ###### /conf/application.conf
 Simply rename **'example.private.conf'** to **'private.conf'**, and set the values. Your values will be used, and private.conf is in the .gitignore  
 [MongoDB installation guide](https://docs.mongodb.org/v3.0/installation/#installation-guides)  
-```
+```INI
 mongo.url="mongodb://localhost/dev"
 google.maps.key="browserkey" #not very important
 play.crypto.secret="supersecret123"
@@ -23,7 +23,7 @@ email {
 ###### /twitter4j.properties
 Simply rename **example.twitter4j.properties** to **twitter4j.properties** and add your Twitter application keys.  
 [Manage Twitter apps here](https://apps.twitter.com/)
-```
+```INI
 debug=true
 oauth.consumerKey=key123
 oauth.consumerSecret=key123
