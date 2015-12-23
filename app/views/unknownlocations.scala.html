@@ -1,0 +1,127 @@
+@(bus: models.Bus, config: models.Config)
+
+
+@main("Unknown Statuses") {
+
+    <style>
+        #map {
+            height: 500px;
+        }
+        body{
+            margin-bottom: 50px;
+            margin-top: 50px;
+        }
+    </style>
+    <form class="form" method="post">
+        <table class="collection">
+            <tbody>
+            @for(l <- config.getMissingLocations(bus.getId())){
+                @defining(config.getMissingLocations(bus.getId).indexOf(l)) { index =>
+                    <tr>
+                        <td>
+                            #@{index}
+                        </td>
+                        <td class="location">
+                            <textarea readonly name="test@{index}" class="materialize-textarea">@{l}</textarea>
+                        </td>
+                        <td>
+                            <textarea name="desc@{index}" class="materialize-textarea"></textarea>
+                        </td>
+                        <td class="center-align">
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger@{index}">Set LatLng</a><br>
+                            <button type="button" class="btn clear-btn red " id="clear@{index}">Clear</button>
+                        </td>
+                        <td>
+                            <div class="input-field">
+                                <label for="lat@{index}">Lat</label><br>
+                                <input type="text" readonly name="lat@{index}" id="lat@{index}">
+                            </div>
+                            <div class="input-field">
+                                <label for="lng@{index}">Lng</label>
+                                <br><input type="text" readonly name="lng@{index}" id="lng@{index}">
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+
+            </tbody>
+        </table>
+        <div class="center-align">
+            <button type="submit" class="btn" id="submitButton">Submit</button>
+            <a href="/unknown" class="btn red">Cancel</a>
+        </div>
+    </form>
+
+
+        <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div id="map">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="modalSave">Save</a>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+    <script type="text/javascript">
+
+            var map;
+            var modalbtn;
+            var marker;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 39.6358, lng: -79.6545},
+                    zoom: 10
+                });
+                marker = new google.maps.Marker({
+                    position : {lat: 39.6358, lng: -79.6545},
+                    map: map,
+                    visible: false
+                });
+
+                map.addListener('click', function(event){
+                    console.log(event.latLng.toJSON());
+                    marker.setPosition(event.latLng);
+                    marker.setVisible(true);
+
+                });
+
+                $('.modal-trigger').leanModal({
+                    ready : function(){
+                        google.maps.event.trigger(map, 'resize');
+                        map.panTo({lat: 39.63096935100379, lng: -79.95619207620621});
+                        marker.setVisible(false);
+                    }
+                });
+                $('.modal-trigger').click(function(){
+
+                    modalbtn = $(this).attr('id').replace('modal-trigger', '');
+                });
+                $('#modalSave').click(function(){
+                    var latlng = marker.getPosition();
+                    $('#lat' + modalbtn).attr('value', latlng.lat());
+                    $('#lng' + modalbtn).attr('value', latlng.lng());
+                });
+                $('.clear-btn').click(function(){
+                    $('#' + $(this).attr('id').replace('clear', 'lat')).attr('value', '0');
+                    $('#' + $(this).attr('id').replace('clear', 'lng')).attr('value', '0');
+                });
+
+            }
+
+        $(document).ready(function(){
+        });
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=@{play.Configuration.root().getString("google.maps.key")}&callback=initMap">
+    </script>
+
+}
+

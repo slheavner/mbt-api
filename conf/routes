@@ -1,0 +1,27 @@
+#
+GET     /                           controllers.Application.index()
+#IMPORTANT
+GET 	/initialize					controllers.Application.initialize()
+
+GET     /api                        controllers.BusController.collection()
+
+POST    /api                        controllers.BusController.collection()
+
+GET		/list/id					controllers.Application.initialize()
+
+GET 	/info/:busid				controllers.Application.bus(busid: String)
+
+GET 	/bus/:busid					controllers.Application.bus(busid: String)
+
+POST 	/support					controllers.Application.email()
+
+GET 	/support					controllers.Application.index()
+
+GET     /unknown                    controllers.Application.unknown()
+
+GET     /unknown/:busid             controllers.Application.updateUnknown(busid: String)
+
+POST    /unknown/:busid             controllers.Application.submitUnknown(busid: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

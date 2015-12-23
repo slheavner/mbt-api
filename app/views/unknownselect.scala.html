@@ -1,0 +1,15 @@
+@(buses: List[models.Bus], config: models.Config)
+
+
+@main("Unknown Statuses") {
+
+
+    <div class="collection">
+
+        @for(bus <- buses){
+            <a class="collection-item" href="/unknown/@{bus.getId}">@{bus.getName}</a><span class="new badge">@{config.getMissingLocations(bus.getId).size()}</span>
+        }
+    </div>
+
+}
+

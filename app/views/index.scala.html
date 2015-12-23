@@ -1,0 +1,229 @@
+@(message: String)
+
+@main("Morgantown Bus & Prt Tracker") {
+
+	<style>
+	
+	.tshadow {
+	
+		text-shadow: 0px 0px 5px #ffffff;
+		
+	}
+	
+	</style>
+
+	<script>
+	
+	$(document).ready(function(){
+	      $('.parallax').parallax();
+	      $('.modal-trigger').leanModal();
+	      
+	    });
+	
+	</script>
+
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <h1 class="header center white-text text-lighten-4">Morgantown Bus & PRT Tracker</h1>
+        <div class="row center">
+          <h5 class="header col s12 blue-text light text-lighten-5">The best way to track busses in Morgantown, West Virginia using Android or iOS</h5>
+        </div>
+        <div class="row center">
+          	<div class="col l6 center">
+	          	<a target="_blank" href="https://play.google.com/store/apps/details?id=com.slheavner.wvubus">
+				  <img class="responsive-image center" alt="Android app on Google Play"
+				       src="https://developer.android.com/images/brand/en_app_rgb_wo_60.png" />
+				</a>
+          	</div>
+          	<div class="col l6 center">
+          		<a target="_blank" href="https://itunes.apple.com/us/app/morgantown-bus-prt-tracker/id993385664?ls=1&mt=8">
+					<img class="responsive-image center" alt="iOS app on iTunes"
+						src="@routes.Assets.at("images/appstore.png")" >
+          		</a>
+          	</div>
+        </div>
+        <div class="row center">
+        	<div class="col s12 m6">
+          	</div>
+          	<div class="col s12 m6">
+          	</div>
+        </div>
+        <br><br><br><br>
+      </div>
+      </div>
+  	<div class="parallax"><img src="@routes.Assets.at("images/BeechurstPRT-dark.jpg")" alt="Unsplashed background img 1"></div>
+  
+  </div>
+
+  
+
+  <div class="z-depth-3">
+  
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center yellow-text text-darken-2"><i class="mdi-maps-directions-bus"></i></h2>
+            <h5 class="center">Simple and to the Point</h5>
+
+            <p class="light">Made to provide information quickly and efficiently, everything is focused on getting you where you need to be.</p>
+          </div>
+        </div>
+
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center yellow-text text-darken-2"><i class="mdi-action-settings mdi-editor-attach-money"></i></h2>
+            <h5 class="center">Free</h5>
+
+            <p class="light">The most important features, such as statuses, maps, schedules, and other information will always be free.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center yellow-text text-darken-2"><i class="mdi-hardware-smartphone"></i></h2>
+            <h5 class="center">User Experience Focused</h5>
+
+            <p class="light">Both apps are developed native to their environments, which means they run faster, look better, and feel more in-line with your phone's ecosystem.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  
+  </div>
+
+
+  <div class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+        <br><br><br><br><br><br>
+          <h5 class="header col s4 m6 l6 light">Now on iPhone (finally)</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax white"><img src="@routes.Assets.at("images/iphone-showcase.png")" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="z-depth-2">
+  <div class="container ">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send yellow-text text-darken-2"></i></h3>
+          <h4>Contact and Support</h4>
+          <p class=" light centered">Have questions about the app? Want to tell me how much you like (or hate) the app? Want to know how it works? Feel free to contact me here. If there is a problem, 
+          I probably haven't noticed it. If there's something you'd like me to add, I would love to know!</p>
+          <a class="waves-effect blue darken-4 btn modal-trigger" href="#modal-email">
+          	Send Email
+          </a>
+          <a class="waves-effect blue darken-4 btn" href="mailto:morgantownbustracker@@gmail.com">
+          	I'll do it myself
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  </div>
+  <div class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+        <br><br><br><br><br><br>
+          <h5 class="header col s4 m6 l6 light">Active development, with new features planned</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax white"><img src="@routes.Assets.at("images/android-showcase.png")" alt="Unsplashed background img 3"></div>
+  </div>
+  
+  <div class="blue darken-4">
+  
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Bio</h5>
+          <p class="grey-text text-lighten-4">My name is Sam Heavner and I am a student at West Virginia University. This app was made out of a need to track the busses and a love of programming.</p>
+
+		</div>
+        <div class="col l3 s12  offset-l3 left-align">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="mailto:slheavner@@mix.wvu.edu">Email   <i class=" mdi-communication-email"></i></a></li>
+            <li><a class="white-text" href="tel:3302068123">Phone   <i class=" mdi-communication-call"></i></a></li>
+            <li><a target="_blank" class="white-text" href="https://www.linkedin.com/in/slheavner">LinkedIn   <i class=" mdi-action-account-box"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+  
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal-email" class="modal">
+    <div class="modal-content">
+	<div class="row">
+        <div class="input-field col s12">
+          <input id="support-name" type="text" class="validate" required>
+          <label for="support-name">Your Name</label>
+        </div>
+      </div>
+    	
+    <div class="row">
+        <div class="input-field col s12">
+          <input id="support-email" type="email" class="validate" required>
+          <label for="support-email">Your Email</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+	    <form class="col s12">
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea id="support-message" class="materialize-textarea" required></textarea>
+	          <label for="support-message">Message</label>
+	        </div>
+	      </div>
+	    </form>
+	  </div>
+    <div class="modal-footer">
+    <button class="modal-action modal-close btn-flat " type="submit" name="action" id="submit">Submit
+    	<i class="mdi-content-send"></i>
+  	</button>
+    <a href="#" class="modal-action modal-close waves-effect btn-flat">Exit</a>
+    </div>
+   </div>
+    <script>
+    $("#submit").click(function() {
+
+        $.ajax({
+        	  type: "POST",
+        	  url: "/support",
+        	  cache: false,
+        	  contentType: "application/json; charset=utf-8",
+        	  data: '{ "message": "'  + $("#support-message").val() + '",' +
+        	      '"username": "' +  $("#support-name").val()  + '",' +
+        	      '"useremail": "' +  $("#support-email").val()  + '"' +
+        	      '}',
+        	  dataType: "json",
+        	  complete: function (transport) { if (transport.status == 200)  Materialize.toast('Email sent successfully', 4000); else  Materialize.toast('There was a problem sending the email. Try sending it yourself.', 4000); }
+        	        });
+    	
+    });
+    
+    
+    </script>
+
+}
