@@ -22,31 +22,34 @@ import java.util.Map;
 
 public class TwitterThread extends Thread {
 	
-	Bus bus;
-	long tweetId = 0;
-	Twitter twitter;
-	ResponseList<Status> statuses;
-	long lastupdate = 0, currenttime;
-	
-	Bus prt;
-	boolean newPrt = false;
-	
-	int[] statusNumbers = {
-			
-	};
-		
-	Map<String, Bus> busMap;
-	boolean cont = true;
-	
+	private Bus bus;
+	private Twitter twitter;
+	private Bus prt;
+	private boolean newPrt = false;
+	private Map<String, Bus> busMap;
+	private long tweetId = 0;
+	private boolean finished = false;
 	private static TwitterThread thread;
+	private static TwitterStream stream;
 	
 	public static void startThread(){
 		thread = new TwitterThread();
 		thread.start();
 	}
-	
+
+	public void run(){
+		startPRTThread();
+		checkTwitterList();
+		streamTwitter();
+	}
+
 	public static void stopThread(){
-//		thread.cont = false;
+		if(thread != null){
+			thread.finished = true;
+		}
+		if(stream != null){
+			stream.shutdown();
+		}
 	}
 	
 	
@@ -66,13 +69,6 @@ public class TwitterThread extends Thread {
 					ConfigArrays.busColors[i]));
 		}
 		
-	}
-	
-	public void run(){
-		startPRTThread();
-		checkTwitterList();
-		streamTwitter();
-		Logger.info("finished twitter thread");
 	}
 	
 	private void streamTwitter(){
@@ -109,7 +105,7 @@ public class TwitterThread extends Thread {
 			}
 		
 		};
-		TwitterStream stream = new TwitterStreamFactory().getInstance();
+		stream = new TwitterStreamFactory().getInstance();
 		stream.addListener(listener);
 		stream.filter(new FilterQuery(ConfigArrays.busLongIds));
 	}
@@ -161,10 +157,8 @@ public class TwitterThread extends Thread {
 		Thread t = new Thread(){
 			
 			public void run(){
-				while(true){
-//					Logger.info("getting prt");
+				while(!TwitterThread.this.finished){
 					getPRTStatus();
-//					Logger.info("sleeping");
 					try {
 						Thread.sleep(10000);
 					} catch (InterruptedException e) {
@@ -183,12 +177,10 @@ public class TwitterThread extends Thread {
 	private void getPRTStatus(){
 		Bus getPrt = busMap.get("prt");
 		try {
-//			Logger.info("getting prt url");
 			URL url = new URL("https://prtstatus.wvu.edu/cache/"+System.currentTimeMillis()+"/true/?json=true&callback=?");
 			InputStream is = url.openStream();
 			JsonReader jReader = new JsonReader(new InputStreamReader(is));
 			JsonObject json = new JsonParser().parse(jReader).getAsJsonObject();
-//			Logger.info(json.toString());
 			Location loc = new Location();
 			loc.setDesc(json.get("message").getAsString());
 			loc.setBus(json.get("status").getAsInt());
@@ -201,7 +193,7 @@ public class TwitterThread extends Thread {
 			if(this.prt == null || !loc.getDesc().equals(this.prt.getLocations()[0].getDesc())){
 				this.prt = getPrt;
 				this.newPrt = true;
-                MBTMail.send("slheavner", "slheavner@gmail.com", "New PRT at " + DateTime.now().toString());
+                //BTMail.send("slheavner", "slheavner@gmail.com", "New PRT at " + DateTime.now().toString());
 				Logger.info("new PRT");
             }
 		} catch (Exception e) {

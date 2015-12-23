@@ -33,13 +33,12 @@ public class MongoFactory {
 	
 	public static MongoClientURI getURI(){
 		if(uri == null){
-            String env = System.getenv("MONGOLAB_URL");
-            Logger.info("env mongouri = " + env);
-            if(env == null){
+			String uriString = ConfigHelper.getMongoUrl();
+            Logger.debug("mongouri = " + uriString);
+            if(uriString == null){
                 uri = new MongoClientURI("mongodb://localhost/dev");
-                Logger.info("database = " + uri.getDatabase());
             }else{
-                uri = new MongoClientURI(env);
+                uri = new MongoClientURI(uriString);
             }
 		}
 		return uri;
