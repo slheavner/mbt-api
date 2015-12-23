@@ -23,7 +23,9 @@ public class Global extends GlobalSettings {
 			}else{
 				Logger.debug("TwitterThread not started, twitter.enable=false");
 			}
-		}
+		}else{
+            TwitterThread.startThread();
+        }
 		super.onStart(arg0);
 	}
 
