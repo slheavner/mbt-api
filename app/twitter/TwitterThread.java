@@ -181,7 +181,7 @@ public class TwitterThread extends Thread {
 			JsonObject json = new JsonParser().parse(jReader).getAsJsonObject();
 			Location loc = new Location();
 			loc.setDesc(json.get("message").getAsString());
-			loc.setBus(json.get("status").getAsInt() + 1);
+			loc.setBus(json.get("status").getAsInt() - 1);
 			loc.setTime(loc.getBus());
 			loc.setLon(0);
 			loc.setLat(0);
