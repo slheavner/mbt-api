@@ -31,6 +31,37 @@ public class TwitterThread extends Thread {
 	private boolean finished = false;
 	private static TwitterThread thread;
 	private static TwitterStream stream;
+	private StatusListener listener = new StatusListener(){
+		private long lastPrt = 0;
+		@Override
+		public void onException(Exception arg0) {
+			Logger.warn("got twitter exception " + arg0.getMessage());
+		}
+
+		@Override
+		public void onDeletionNotice(StatusDeletionNotice arg0) {}
+
+		@Override
+		public void onScrubGeo(long arg0, long arg1) {	}
+
+		@Override
+		public void onStallWarning(StallWarning arg0) {
+			Logger.warn("Got twitter stall warning");
+		}
+
+		@Override
+		public void onTrackLimitationNotice(int arg0) {	}
+
+		@Override
+		public void onStatus(Status status) {
+			updateStatus(status);
+			if(System.currentTimeMillis() - lastPrt > 60000){
+				getPRTStatus();
+				lastPrt = System.currentTimeMillis();
+			}
+		}
+
+	};
 	
 	public static void startThread(){
 		thread = new TwitterThread();
@@ -38,7 +69,7 @@ public class TwitterThread extends Thread {
 	}
 
 	public void run(){
-		startPRTThread();
+		//startPRTThread();
 		checkTwitterList();
 		streamTwitter();
 	}
@@ -72,39 +103,6 @@ public class TwitterThread extends Thread {
 	}
 	
 	private void streamTwitter(){
-		StatusListener listener = new StatusListener(){
-
-			@Override
-			public void onException(Exception arg0) {
-				Logger.warn("got twitter exception " + arg0.getMessage());
-			}
-
-			@Override
-			public void onDeletionNotice(StatusDeletionNotice arg0) {}
-
-			@Override
-			public void onScrubGeo(long arg0, long arg1) {	}
-
-			@Override
-			public void onStallWarning(StallWarning arg0) {
-				Logger.warn("Got twitter stall warning");
-			}
-			
-			@Override
-			public void onTrackLimitationNotice(int arg0) {	}
-
-			@Override
-			public void onStatus(Status status) {
-				updateStatus(status);
-				if(newPrt){
-					MongoFactory.getBusStore().save(TwitterThread.this.prt);
-					Logger.info("saved new PRT");
-                    MBTMail.send("slheavner", "slheavner@gmail.com", "New PRT at " + DateTime.now().toString());
-                    newPrt = false;
-				}
-			}
-		
-		};
 		stream = new TwitterStreamFactory().getInstance();
 		stream.addListener(listener);
 		stream.filter(new FilterQuery(ConfigArrays.busLongIds));
@@ -192,9 +190,7 @@ public class TwitterThread extends Thread {
 			getPrt.setLocations(locations);
 			if(this.prt == null || !loc.getDesc().equals(this.prt.getLocations()[0].getDesc())){
 				this.prt = getPrt;
-				this.newPrt = true;
-                //BTMail.send("slheavner", "slheavner@gmail.com", "New PRT at " + DateTime.now().toString());
-				Logger.info("new PRT");
+				MongoFactory.getBusStore().save(getPrt);
             }
 		} catch (Exception e) {
 			Logger.error(e.getMessage());
