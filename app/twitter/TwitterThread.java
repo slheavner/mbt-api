@@ -55,10 +55,11 @@ public class TwitterThread extends Thread {
 		@Override
 		public void onStatus(Status status) {
 			updateStatus(status);
-			if(System.currentTimeMillis() - lastPrt > 60000){
-				getPRTStatus();
-				lastPrt = System.currentTimeMillis();
-			}
+//			Logger.info("PRT TIME DIFF: " + (System.currentTimeMillis() - lastPrt));
+//			if(System.currentTimeMillis() - lastPrt > 60000){
+//				getPRTStatus();
+//				lastPrt = System.currentTimeMillis();
+//			}
 		}
 
 	};
@@ -69,8 +70,8 @@ public class TwitterThread extends Thread {
 	}
 
 	public void run(){
-		//startPRTThread();
 		checkTwitterList();
+        startPRTThread();
 		streamTwitter();
 	}
 
@@ -158,7 +159,7 @@ public class TwitterThread extends Thread {
 				while(!TwitterThread.this.finished){
 					getPRTStatus();
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(60000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -174,6 +175,7 @@ public class TwitterThread extends Thread {
 	
 	private void getPRTStatus(){
 		Bus getPrt = busMap.get("prt");
+        Bus currentPrt = MongoFactory.getBusStore().find(Bus.class, "_id", "prt").get();
 		try {
 			URL url = new URL("https://prtstatus.wvu.edu/cache/"+System.currentTimeMillis()+"/true/?json=true&callback=?");
 			InputStream is = url.openStream();
@@ -188,8 +190,9 @@ public class TwitterThread extends Thread {
 			Location[] locations = new Location[3];
 			locations[0] = loc;
 			getPrt.setLocations(locations);
-			if(this.prt == null || !loc.getDesc().equals(this.prt.getLocations()[0].getDesc())){
-				this.prt = getPrt;
+//            Logger.debug("testing prt status");
+			if(loc.getTime() != currentPrt.getLocations()[0].getTime()){
+                Logger.info("Got prt status");
 				MongoFactory.getBusStore().save(getPrt);
             }
 		} catch (Exception e) {
